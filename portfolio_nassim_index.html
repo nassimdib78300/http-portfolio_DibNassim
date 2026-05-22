@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nassim DIB — Portfolio BTS SIO</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --accent: #3b82f6;
+    --accent2: #60a5fa;
+    --accent-soft: rgba(59,130,246,0.12);
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: rgba(255,255,255,0.07);
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); }
+
+  nav { display: flex; gap: 4px; }
+
+  nav button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  nav button:hover { color: var(--text); background: var(--accent-soft); }
+  nav button.active { color: var(--accent2); background: var(--accent-soft); }
+
+  /* ---- LAYOUT ---- */
+  .page { display: none; padding: 48px 40px; max-width: 1000px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ---- HERO ---- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 56px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent2);
+    border: 1px solid rgba(96,165,250,0.25);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--accent); }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 500px;
+    margin-bottom: 28px;
+  }
+
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #1d4ed8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .contact-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+  .chip svg { width: 14px; height: 14px; color: var(--accent2); }
+
+  /* ---- CARDS ---- */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(96,165,250,0.3); }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 12px;
+  }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .badge {
+    background: var(--accent-soft);
+    color: var(--accent2);
+    border: 1px solid rgba(96,165,250,0.2);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .card p { color: var(--text-muted); font-size: 14px; }
+
+  .task-list { list-style: none; margin-top: 10px; }
+  .task-list li {
+    color: var(--text-muted);
+    font-size: 14px;
+    padding: 4px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .task-list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  /* skills grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .skill-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .skill-pill:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+  /* grid 2 cols */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } .hero { grid-template-columns: 1fr; } .hero-avatar { display: none; } }
+
+  /* ---- VEILLE ---- */
+  .veille-intro {
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(29,78,216,0.05));
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .veille-intro h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .veille-intro p { color: var(--text-muted); font-size: 14px; }
+
+  .source-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .source-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(96,165,250,0.2);
+    color: var(--accent2);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .source-card a { color: var(--accent2); font-size: 13px; text-decoration: none; }
+  .source-card a:hover { text-decoration: underline; }
+  .source-card p { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+
+  /* ---- BADGE ---- */
+  .badge-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .badge-section h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 8px; }
+  .badge-section p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+
+  /* badge FunMOOC img placeholder */
+  .badge-img-wrapper {
+    display: inline-block;
+    border: 2px solid rgba(96,165,250,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 480px;
+    width: 100%;
+  }
+  .badge-img-wrapper img { width: 100%; display: block; }
+
+  /* ---- CV SECTION ---- */
+  .cv-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .cv-wrapper p { color: var(--text-muted); font-size: 14px; text-align: center; }
+  .cv-data {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    color: #111;
+    border-radius: 10px;
+    padding: 32px 36px;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .cv-data h2 { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: #1e40af; margin-bottom: 2px; }
+  .cv-data .cv-subtitle { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .cv-data .cv-section { margin-top: 18px; }
+  .cv-data .cv-section h3 { font-size: 11px; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; }
+  .cv-data .cv-item { margin-bottom: 10px; }
+  .cv-data .cv-item strong { font-weight: 600; }
+  .cv-data .cv-item .date { font-size: 11px; color: #94a3b8; }
+  .cv-data ul { padding-left: 18px; color: #475569; }
+  .cv-data ul li { margin-bottom: 3px; }
+
+  /* ---- CONTACT FORM ---- */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--text-muted); text-transform: uppercase; }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .btn-send {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-send:hover { background: #2563eb; }
+  .btn-send:active { transform: scale(0.98); }
+
+  .success-msg {
+    display: none;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.3);
+    color: #86efac;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  /* wifi diagram */
+  .wifi-diagram {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .wifi-arcs { position: relative; display: inline-block; width: 120px; height: 80px; margin-bottom: 8px; }
+  .wifi-arcs span {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50% 50% 0 0;
+    border: 3px solid var(--accent);
+    border-bottom: none;
+    opacity: 0.3;
+    animation: pulse-wifi 2s infinite;
+  }
+  .wifi-arcs span:nth-child(1) { width: 30px; height: 20px; animation-delay: 0s; opacity: 1; }
+  .wifi-arcs span:nth-child(2) { width: 60px; height: 40px; animation-delay: 0.2s; opacity: 0.7; }
+  .wifi-arcs span:nth-child(3) { width: 90px; height: 60px; animation-delay: 0.4s; opacity: 0.45; }
+  .wifi-arcs span:nth-child(4) { width: 120px; height: 80px; animation-delay: 0.6s; opacity: 0.2; }
+  .wifi-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; }
+  @keyframes pulse-wifi { 0%,100%{opacity:inherit;} 50%{opacity:0.15;} }
+
+  /* footer */
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Nassim <span>DIB</span></div>
+  <nav>
+    <button class="active" onclick="show('profil', this)">Profil</button>
+    <button onclick="show('formation', this)">Formation</button>
+    <button onclick="show('stages', this)">Stages</button>
+    <button onclick="show('certifications', this)">Certifications</button>
+    <button onclick="show('veille', this)">Veille Techno</button>
+    <button onclick="show('contact', this)">Contact</button>
+  </nav>
+</header>
+
+<!-- =========== PROFIL =========== -->
+<div id="profil" class="page active">
+  <div class="hero">
+    <div>
+      <div class="hero-tag">BTS SIO — Alternance</div>
+      <h1>Nassim <span>DIB</span></h1>
+      <p>Etudiant en BTS SIO (Services Informatiques aux Organisations) en alternance. Passionné par les systemes numeriques, les reseaux et le developpement informatique.</p>
+      <div class="contact-chips">
+        <div class="chip">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+          06.24.81.26.35
+        </div>
+        <div class="chip">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          nassim.dib78300@gmail.com
+        </div>
+        <div class="chip">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Poissy, 78300
+        </div>
+      </div>
+    </div>
+    <div class="hero-avatar">ND</div>
+  </div>
+
+  <div class="section-title">A propos</div>
+  <div class="card" style="margin-bottom:28px;">
+    <p>Actuellement en BTS SIO par alternance, je souhaite developper mes competences en informatique au sein d'une entreprise. Mes experiences de stage m'ont permis d'acquerir des bases solides en configuration reseau, developpement de base de donnees et maintenance informatique. Je suis motive, ponctuel et toujours pret a apprendre de nouvelles technologies.</p>
+  </div>
+
+  <div class="section-title">Competences</div>
+  <div class="skills-grid">
+    <div class="skill-pill">Configuration reseau</div>
+    <div class="skill-pill">Configuration Switch</div>
+    <div class="skill-pill">Developpement IA</div>
+    <div class="skill-pill">Base de donnees</div>
+    <div class="skill-pill">WAMP / XAMPP</div>
+    <div class="skill-pill">Windows 10</div>
+    <div class="skill-pill">Reparation materielle</div>
+    <div class="skill-pill">Cameras de surveillance</div>
+    <div class="skill-pill">Bon relationnel</div>
+    <div class="skill-pill">Rigueur</div>
+    <div class="skill-pill">Ponctualite</div>
+    <div class="skill-pill">Adaptabilite</div>
+  </div>
+
+  <div class="section-title">Loisirs</div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Football</div><p>Pratique reguliere du football, sport d'equipe qui developpe l'esprit collectif et la communication.</p></div>
+    <div class="card"><div class="card-title">Sport automobile</div><p>Passion pour le sport automobile et la mecanique automobile.</p></div>
+    <div class="card"><div class="card-title">Voyages</div><p>Decouverte de nouvelles cultures et environnements a travers les voyages.</p></div>
+    <div class="card"><div class="card-title">Informatique</div><p>Reparation de telephones, ordinateurs (cartes meres, ecrans), formatage et installation de cameras.</p></div>
+  </div>
+</div>
+
+<!-- =========== FORMATION =========== -->
+<div id="formation" class="page">
+  <div class="hero-tag">Parcours scolaire</div>
+  <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;letter-spacing:-1px;margin-bottom:40px;">Formation</h1>
+
+  <div class="section-title">Diplomes</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">BTS SIO — Services Informatiques aux Organisations</div>
+        <p style="margin-top:4px;">Par alternance — En cours</p>
+      </div>
+      <div class="badge">2025 — en cours</div>
+    </div>
+    <p>Formation en alternance dans le domaine des services informatiques aux organisations. Acquisition de competences en reseaux, developpement, cybersecurite et gestion des systemes d'information.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Baccalaureat Professionnel SN — Systemes Numeriques</div>
+        <p style="margin-top:4px;">Lycee professionnel</p>
+      </div>
+      <div class="badge">2025</div>
+    </div>
+    <p>Formation aux systemes numeriques, maintenance informatique et electronique. Acquisition des bases en reseaux et systemes embarques.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Brevet des colleges</div>
+      </div>
+      <div class="badge">2022</div>
+    </div>
+    <p>Obtention du diplome national du brevet (DNB).</p>
+  </div>
+</div>
+
+<!-- =========== STAGES =========== -->
+<div id="stages" class="page">
+  <div class="hero-tag">Experiences professionnelles</div>
+  <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;letter-spacing:-1px;margin-bottom:40px;">Stages & Alternance</h1>
+
+  <div class="section-title">BTS SIO — Alternance</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Da Vinci — 1ere annee</div>
+        <p style="margin-top:4px;">Stage de 6 semaines</p>
+      </div>
+      <div class="badge">1ere annee</div>
+    </div>
+    <p style="margin-bottom:10px;">Stage de 6 semaines effectue dans le cadre de la premiere annee de BTS SIO.</p>
+    <ul class="task-list">
+      <li>Configuration d'un switch (parametrage des VLAN, des ports, gestion du reseau local)</li>
+      <li>Developpement de l'intelligence artificielle (mise en place et contribution a des outils bases sur l'IA)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Entreprise — 2eme annee</div>
+        <p style="margin-top:4px;">Stage de 7 semaines — A venir</p>
+      </div>
+      <div class="badge">2eme annee</div>
+    </div>
+    <p>Stage de 7 semaines prevu en deuxieme annee de BTS SIO. L'entreprise d'accueil n'est pas encore definie.</p>
+  </div>
+
+  <div class="section-title">Baccalaureat Pro SN — Stages</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Altameos Multimedia</div>
+        <p style="margin-top:4px;">Stage Terminale — 6 semaines</p>
+      </div>
+      <div class="badge">Terminale</div>
+    </div>
+    <ul class="task-list">
+      <li>Realisation d'une base de donnees</li>
+      <li>Utilisation d'outils informatiques (WAMP, XAMPP)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Triel Phone</div>
+        <p style="margin-top:4px;">Stage Seconde — 6 semaines</p>
+      </div>
+      <div class="badge">Seconde</div>
+    </div>
+    <ul class="task-list">
+      <li>Reparation de telephones et appareils informatiques</li>
+      <li>Accueil et relation client</li>
+    </ul>
+  </div>
+</div>
+
+<!-- =========== CERTIFICATIONS =========== -->
+<div id="certifications" class="page">
+  <div class="hero-tag">Diplomes & Badges</div>
+  <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;letter-spacing:-1px;margin-bottom:40px;">Certifications</h1>
+
+  <div class="section-title">Open Badge FUN MOOC</div>
+
+  <img src="Capture_d_écran_2026-05-19_165403.png" alt="Open Badge FUN MOOC - Nassim DIB" style="display:block;max-width:520px;width:100%;border-radius:10px;margin-bottom:28px;">
+
+  <div class="section-title">CV</div>
+  <div class="cv-wrapper">
+    <p>Curriculum Vitae — Nassim DIB</p>
+    <div class="cv-data">
+      <h2>NASSIM DIB</h2>
+      <div class="cv-subtitle">Services Informatiques aux Organisations (SIO)</div>
+
+      <p style="color:#475569;font-size:13px;">Actuellement en BTS SIO par alternance, je souhaite poursuivre mes etudes dans l'enseignement superieur. Integrer votre entreprise me permettra de developper mes competences ainsi que mes connaissances informatiques.</p>
+
+      <div class="cv-section">
+        <h3>Contact</h3>
+        <div class="cv-item">
+          06.24.81.26.35<br>
+          nassim.dib78300@gmail.com<br>
+          13 rue du pont ancien, 78300 POISSY
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h3>Formation</h3>
+        <div class="cv-item">
+          <strong>BTS SIO — Alternance</strong><br>
+          <span class="date">2025 — en cours</span>
+        </div>
+        <div class="cv-item">
+          <strong>Bac Pro SN (Systemes Numeriques)</strong><br>
+          <span class="date">2025</span>
+        </div>
+        <div class="cv-item">
+          <strong>Brevet des colleges</strong><br>
+          <span class="date">2022</span>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h3>Experiences</h3>
+        <div class="cv-item">
+          <strong>Da Vinci (Stage 1ere annee — 6 semaines)</strong>
+          <ul>
+            <li>Configuration d'un switch</li>
+            <li>Developpement de l'IA</li>
+          </ul>
+        </div>
+        <div class="cv-item">
+          <strong>Altameos Multimedia (Stage Terminale — 6 semaines)</strong>
+          <ul>
+            <li>Realisation d'une base de donnees</li>
+            <li>Utilisation WAMP, XAMPP</li>
+          </ul>
+        </div>
+        <div class="cv-item">
+          <strong>Triel Phone (Stage Seconde — 6 semaines)</strong>
+          <ul>
+            <li>Reparation telephone et ordinateur</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h3>Competences</h3>
+        <ul>
+          <li>Configuration switch / reseaux</li>
+          <li>Base de donnees (WAMP, XAMPP)</li>
+          <li>Reparation materielle</li>
+          <li>Windows 10, formatage</li>
+          <li>Cameras de surveillance</li>
+          <li>Bon relationnel, rigueur, ponctualite</li>
+        </ul>
+      </div>
+
+      <div class="cv-section">
+        <h3>Loisirs</h3>
+        <p style="color:#475569;">Football · Sport automobile · Voyages</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========== VEILLE TECHNOLOGIQUE =========== -->
+<div id="veille" class="page">
+  <div class="hero-tag">Veille Technologique</div>
+  <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;letter-spacing:-1px;margin-bottom:40px;">Veille Technologique</h1>
+
+  <div class="veille-intro">
+    <h2>Qu'est-ce que la veille technologique ?</h2>
+    <p>La veille technologique consiste a surveiller, collecter et analyser en continu les evolutions, les innovations et les nouveautes dans un domaine technologique donne. Elle permet a un professionnel de rester a jour sur les avancees du secteur, d'anticiper les changements, et d'adapter ses competences en consequence. Dans le cadre du BTS SIO, la veille technologique fait partie du referentiel : elle forme les futurs professionnels a etre toujours en phase avec les evolutions du numerique.</p>
+  </div>
+
+  <div class="section-title">Sujet de veille — Le Wi-Fi</div>
+
+  <div class="wifi-diagram">
+    <div class="wifi-arcs">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="wifi-dot"></div>
+    <p style="color:var(--text-muted);font-size:13px;margin-top:10px;">Technologie sans fil — IEEE 802.11</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:12px;">Qu'est-ce que le Wi-Fi ?</div>
+    <p>Le Wi-Fi (Wireless Fidelity) est une technologie de reseau local sans fil qui permet de connecter des appareils a internet ou entre eux sans utiliser de cables. Elle repose sur la norme IEEE 802.11 et utilise des ondes radio pour transmettre des donnees. Le Wi-Fi est aujourd'hui omipresent : dans les domiciles, les entreprises, les espaces publics et meme dans les reseaux industriels.</p>
+    <p style="margin-top:10px;">Il fonctionne via un routeur (ou une box internet) qui emet un signal radio. Les appareils equipes d'une carte Wi-Fi (ordinateurs, smartphones, imprimantes...) captent ce signal et peuvent ainsi se connecter au reseau sans cables.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:12px;">Evolution des normes Wi-Fi</div>
+    <ul class="task-list">
+      <li><strong>Wi-Fi 4 (802.11n)</strong> — Introduit vers 2009, il offre des debits jusqu'a 600 Mb/s sur les bandes 2,4 GHz et 5 GHz.</li>
+      <li><strong>Wi-Fi 5 (802.11ac)</strong> — Sorti en 2013, il ameliore les debits sur la bande 5 GHz avec la technologie MU-MIMO.</li>
+      <li><strong>Wi-Fi 6 (802.11ax)</strong> — Lance en 2019, il ameliore la gestion des connexions simultanees et la consommation energetique.</li>
+      <li><strong>Wi-Fi 6E</strong> — Extension du Wi-Fi 6 utilisant la bande 6 GHz pour reduire les interferences, sorti fin 2021.</li>
+      <li><strong>Wi-Fi 7 (802.11be)</strong> — Certifie en janvier 2024, il represente la derniere generation du standard sans fil.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:12px;">Le Wi-Fi 7 : la revolution actuelle</div>
+    <p>Le Wi-Fi 7 est la derniere norme certifiee par la Wi-Fi Alliance en janvier 2024. Il apporte des ameliorations majeures par rapport a ses predecesseurs :</p>
+    <ul class="task-list" style="margin-top:10px;">
+      <li><strong>Debits bien superieurs</strong> : jusqu'a 46 Gb/s en theorie, soit environ 5 fois plus rapide que le Wi-Fi 6, grace a des canaux 320 MHz et la modulation 4096-QAM.</li>
+      <li><strong>Multi-Link Operation (MLO)</strong> : cette innovation permet a un appareil de se connecter simultanement sur plusieurs bandes de frequences (2,4 GHz, 5 GHz et 6 GHz), reduisant la latence et optimisant la bande passante.</li>
+      <li><strong>Meilleure gestion des appareils</strong> : ideal pour les environments avec de nombreux appareils connectes (IoT, smart home, bureaux...).</li>
+      <li><strong>Deja disponible en France</strong> : Free a ete le premier operateur a proposer un routeur Wi-Fi 7 avec la Freebox Ultra en janvier 2024. SFR, Bouygues et Orange ont suivi.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:12px;">Pourquoi cette veille est pertinente pour le BTS SIO ?</div>
+    <p>Le Wi-Fi est au coeur des infrastructures reseaux des entreprises. En tant que futur professionnel du BTS SIO, comprendre et suivre l'evolution des normes Wi-Fi est essentiel pour :</p>
+    <ul class="task-list" style="margin-top:10px;">
+      <li>Conseiller sur le deploiement de reseaux sans fil performants</li>
+      <li>Maintenir et faire evoluer les infrastructures reseau d'entreprise</li>
+      <li>Anticiper les besoins en bande passante lies aux usages modernes (cloud, IA, IoT)</li>
+      <li>Assurer la securite des connexions sans fil</li>
+    </ul>
+  </div>
+
+  <div class="section-title">Sources</div>
+
+  <div class="source-card">
+    <div class="source-num">1</div>
+    <div>
+      <a href="https://www.lafibreoptique.fr/guide/wifi-7" target="_blank">lafibreoptique.fr — Guide complet Wi-Fi 7 (mis a jour mai 2026)</a>
+      <p>Guide detaille sur les debits, technologies (MLO, 4096-QAM), les box fibre compatibles en France et les differences avec les generations precedentes.</p>
+    </div>
+  </div>
+
+  <div class="source-card">
+    <div class="source-num">2</div>
+    <div>
+      <a href="https://www.phonandroid.com/wi-fi-7-debits-fonctionnalites-nouveautes-tout-savoir-sur-le-reseau-sans-fil-nouvelle-generation.html" target="_blank">Phonandroid — Wi-Fi 7 : tout savoir sur la nouvelle generation (mars 2025)</a>
+      <p>Article complet sur les nouveautes du Wi-Fi 7 : OFDMA, MU-MIMO 16 flux, Multi-Link Operations et programme de certification Wi-Fi Alliance.</p>
+    </div>
+  </div>
+
+  <div class="source-card">
+    <div class="source-num">3</div>
+    <div>
+      <a href="https://www.ariase.com/box/dossiers/wifi-7" target="_blank">Ariase.com — Wi-Fi 7 : tout savoir sur la nouvelle norme sans fil</a>
+      <p>Presentation des trois bandes de frequences du Wi-Fi 7, disponibilite en France et comparaison avec les normes Wi-Fi 6 et Wi-Fi 6E.</p>
+    </div>
+  </div>
+
+  <div class="source-card">
+    <div class="source-num">4</div>
+    <div>
+      <a href="https://www.digital-device.eu/index.php/2025/02/03/wi-fi-7-lavenir-de-la-connectivite-sans-fil-des-2025/" target="_blank">Digital-Device.eu — Wi-Fi 7 : l'avenir de la connectivite sans fil (fevrier 2025)</a>
+      <p>Focus sur les apports techniques du Wi-Fi 7 pour les usages professionnels : realite augmentee, cloud computing, streaming et automatisation industrielle.</p>
+    </div>
+  </div>
+
+  <div class="source-card">
+    <div class="source-num">5</div>
+    <div>
+      <a href="https://www.choisir.com/box-internet/articles/216482/arrivee-du-wi-fi-7-en-2025-ou-en-sommes-nous-vraiment" target="_blank">Choisir.com — Arrivee du Wi-Fi 7 en 2025 : bilan (novembre 2025)</a>
+      <p>Bilan de l'adoption du Wi-Fi 7 en France fin 2025, deja accessible via les routeurs et les box des operateurs francais.</p>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:32px;">Mon Pearltrees</div>
+
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Nassim_07 — Pearltrees</div>
+        <p style="margin-top:4px;">Collection de ressources sur la veille technologique Wi-Fi 7</p>
+      </div>
+      <a href="https://www.pearltrees.com/nassim_07" target="_blank" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Voir mon Pearltrees
+      </a>
+    </div>
+    <p>Mon Pearltrees regroupe l'ensemble des ressources que j'ai collectees dans le cadre de ma veille technologique sur le Wi-Fi et le Wi-Fi 7. Pearltrees est un outil de curation de contenu qui permet d'organiser et de partager des liens web sous forme visuelle.</p>
+  </div>
+
+  <div class="section-title">Capture d'ecran Open Badge FUN MOOC</div>
+
+  <img src="Capture_d_écran_2026-05-19_165403.png" alt="Demande Open Badge FUN MOOC - Nassim DIB" style="display:block;max-width:520px;width:100%;border-radius:10px;margin-bottom:16px;">
+</div>
+
+<!-- =========== CONTACT =========== -->
+<div id="contact" class="page">
+  <div class="hero-tag">Me contacter</div>
+  <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;letter-spacing:-1px;margin-bottom:16px;">Contact</h1>
+  <p style="color:var(--text-muted);margin-bottom:40px;">Vous souhaitez me contacter pour une opportunite, un stage ou simplement echanger ? Remplissez le formulaire ci-dessous.</p>
+
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-title" style="margin-bottom:12px;">Mes coordonnees</div>
+    <div class="contact-chips" style="flex-direction:column;align-items:flex-start;">
+      <div class="chip">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        06.24.81.26.35
+      </div>
+      <div class="chip">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        nassim.dib78300@gmail.com
+      </div>
+      <div class="chip">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        13 rue du pont ancien, 78300 Poissy
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:20px;">Laissez-moi un message</div>
+    <div class="contact-grid">
+      <div class="form-group">
+        <label>Votre prenom</label>
+        <input type="text" id="c-prenom" placeholder="Jean">
+      </div>
+      <div class="form-group">
+        <label>Votre nom</label>
+        <input type="text" id="c-nom" placeholder="Dupont">
+      </div>
+      <div class="form-group">
+        <label>Votre email</label>
+        <input type="email" id="c-email" placeholder="jean.dupont@email.com">
+      </div>
+      <div class="form-group">
+        <label>Votre telephone (optionnel)</label>
+        <input type="tel" id="c-tel" placeholder="06 XX XX XX XX">
+      </div>
+      <div class="form-group">
+        <label>Objet</label>
+        <select id="c-objet">
+          <option value="">Choisir un objet</option>
+          <option>Proposition de stage</option>
+          <option>Proposition d'alternance</option>
+          <option>Collaboration</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Votre entreprise (optionnel)</label>
+        <input type="text" id="c-entreprise" placeholder="Nom de votre entreprise">
+      </div>
+      <div class="form-group full">
+        <label>Votre message</label>
+        <textarea id="c-message" placeholder="Bonjour Nassim, je vous contacte pour..."></textarea>
+      </div>
+    </div>
+    <button class="btn-send" onclick="sendForm()">Envoyer le message</button>
+    <div class="success-msg" id="success-msg">
+      Merci pour votre message ! Je vous repondrai dans les plus brefs delais.
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 Nassim DIB — Portfolio BTS SIO
+</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function sendForm() {
+  const prenom = document.getElementById('c-prenom').value.trim();
+  const nom = document.getElementById('c-nom').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const message = document.getElementById('c-message').value.trim();
+
+  if (!prenom || !nom || !email || !message) {
+    alert('Merci de remplir au minimum votre prenom, nom, email et message.');
+    return;
+  }
+
+  // Simule l'envoi (sans backend)
+  document.getElementById('success-msg').style.display = 'block';
+  document.getElementById('c-prenom').value = '';
+  document.getElementById('c-nom').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-tel').value = '';
+  document.getElementById('c-objet').value = '';
+  document.getElementById('c-entreprise').value = '';
+  document.getElementById('c-message').value = '';
+
+  setTimeout(() => {
+    document.getElementById('success-msg').style.display = 'none';
+  }, 5000);
+}
+</script>
+</body>
+</html>
